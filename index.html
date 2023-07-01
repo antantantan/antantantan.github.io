@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>German Word Quiz</title>
+  <style>
+  </style>
+</head>
+<body>
+  <h1>German Word Quiz</h1>
+  <div id="german-word"></div>
+  <div id="english-words"></div>
+  <script>
+    const germanWords = ['wie', 'ich', 'seine', 'dass', 'er', 'war', 'für', 'auf', 'sind', 'mit', 'sie', 'sein', 'bei', 'ein', 'haben', 'dies', 'aus', 'durch', 'heiß', 'Wort', 'aber', 'was', 'einige', 'ist', 'es', 'Sie', 'oder', 'hatte', 'die', 'von', 'zu', 'und'];
+    const englishWords = ['as', 'I', 'his', 'that', 'he', 'was', 'for', 'on', 'are', 'with', 'they', 'be', 'at', 'one', 'have', 'this', 'from', 'by', 'hot', 'word', 'but', 'what', 'some', 'is', 'it', 'you', 'or', 'had', 'the', 'of', 'to', 'and'];
+
+    let index = 0;
+    let options = [];
+
+    const germanWordDiv = document.getElementById('german-word');
+    const englishWordsDiv = document.getElementById('english-words');
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function createButton(word) {
+      const button = document.createElement('button');
+      button.textContent = word;
+      button.addEventListener('click', () => {
+        // Handle button click event
+        console.log(`Button "${word}" clicked!`);
+        index++;
+        updateWords();
+      });
+      return button;
+    }
+
+    function updateWords() {
+        germanWordDiv.innerText = germanWords[index];
+        englishWordsDiv.innerHTML = "";
+        options = [];
+        options.push(index);
+        for (let i = 0; i < 5; i++) {
+            options.push(Math.floor(Math.random() * englishWords.length));
+        }
+        shuffleArray(options);
+        options.forEach(option => {
+            const button = createButton(englishWords[option]);
+            englishWordsDiv.appendChild(button);
+        });
+    }
+
+    updateWords();
+  </script>
+</body>
+</html>
