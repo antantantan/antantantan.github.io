@@ -82,12 +82,22 @@
         questionDiv.append(germanWordDiv);
         questionDiv.append(englishWordsDiv);
         questionDiv.className = "question";
-        germanWordDiv.innerText = germanWords[index];
+        const word = germanWords[index];
+        const wordLink = document.createElement('a');
+        wordLink.href = "https://translate.google.com/?sl=de&tl=en&text=" + word + "&op=translate";
+        wordLink.target = "_blank";
+        wordLink.rel = "noopener noreferrer";
+        wordLink.innerText = word;
+        germanWordDiv.append(wordLink);
         englishWordsDiv.innerHTML = "";
         options = [];
         options.push(index);
         for (let i = 0; i < 5; i++) {
-            options.push(Math.floor(Math.random() * englishWords.length));
+            let option = index;
+            while(options.indexOf(option) >= 0) {
+              option = Math.floor(Math.random() * englishWords.length);
+            }
+            options.push(option);
         }
         shuffleArray(options);
         options.forEach(option => {
