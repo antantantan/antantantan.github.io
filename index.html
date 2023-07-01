@@ -4,21 +4,34 @@
   <meta charset="UTF-8">
   <title>German Word Quiz</title>
   <style>
+    .main {
+      text-align: center;
+    }
+    .correct {
+      background-color: lightgreen;
+    }
+    .incorrect {
+      background-color: red;
+    }
+    .question {
+      margin: 10px;
+    }
   </style>
 </head>
 <body>
-  <h1>German Word Quiz</h1>
-  <div id="german-word"></div>
-  <div id="english-words"></div>
+  <div class="main">
+    <h1>German Word Quiz</h1>
+    <div id="words"></div>
+  </div>
   <script>
     const germanWords = ['wie', 'ich', 'seine', 'dass', 'er', 'war', 'für', 'auf', 'sind', 'mit', 'sie', 'sein', 'bei', 'ein', 'haben', 'dies', 'aus', 'durch', 'heiß', 'Wort', 'aber', 'was', 'einige', 'ist', 'es', 'Sie', 'oder', 'hatte', 'die', 'von', 'zu', 'und'];
     const englishWords = ['as', 'I', 'his', 'that', 'he', 'was', 'for', 'on', 'are', 'with', 'they', 'be', 'at', 'one', 'have', 'this', 'from', 'by', 'hot', 'word', 'but', 'what', 'some', 'is', 'it', 'you', 'or', 'had', 'the', 'of', 'to', 'and'];
 
     let index = 0;
     let options = [];
+    let correctButton;
 
-    const germanWordDiv = document.getElementById('german-word');
-    const englishWordsDiv = document.getElementById('english-words');
+    const wordsDiv = document.getElementById('words');
 
     function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
@@ -27,12 +40,19 @@
         }
     }
 
-    function createButton(word) {
+    function colorButtons() {
+      correctButton.classList.add('correct');
+    }
+
+    function createButton(option) {
       const button = document.createElement('button');
-      button.textContent = word;
+      button.textContent = englishWords[option];
+      if (option === index) {
+        correctButton = button;
+      }
       button.addEventListener('click', () => {
-        // Handle button click event
-        console.log(`Button "${word}" clicked!`);
+        button.className = 'incorrect';
+        correctButton.className = 'correct';
         index++;
         updateWords();
       });
@@ -40,6 +60,13 @@
     }
 
     function updateWords() {
+        const questionDiv = document.createElement('div');
+        const germanWordDiv = document.createElement('div');
+        const englishWordsDiv = document.createElement('div');
+        wordsDiv.insertBefore(questionDiv, wordsDiv.firstChild);
+        questionDiv.append(germanWordDiv);
+        questionDiv.append(englishWordsDiv);
+        questionDiv.className = "question";
         germanWordDiv.innerText = germanWords[index];
         englishWordsDiv.innerHTML = "";
         options = [];
@@ -49,7 +76,7 @@
         }
         shuffleArray(options);
         options.forEach(option => {
-            const button = createButton(englishWords[option]);
+            const button = createButton(option);
             englishWordsDiv.appendChild(button);
         });
     }
