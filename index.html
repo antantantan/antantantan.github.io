@@ -110,7 +110,8 @@
             options.push(option);
         }
         shuffleArray(options);
-        createSkipButton();
+        const skipButton = createSkipButton();
+        englishWordsDiv.appendChild(skipButton);
         options.forEach(option => {
             const button = createButton(option);
             englishWordsDiv.appendChild(button);
