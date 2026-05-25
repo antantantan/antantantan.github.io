@@ -54,6 +54,16 @@
       correctButton.classList.add('correct');
     }
 
+    function createSkipButton() {
+      const button = document.createElement('button');
+      button.textContent = "Skip";
+      button.addEventListener('click', () => {
+        button.className = 'incorrect';
+        updateWords();
+      });
+      return button;
+    }
+
     function createButton(option) {
       const button = document.createElement('button');
       button.textContent = englishWords[option];
@@ -100,6 +110,7 @@
             options.push(option);
         }
         shuffleArray(options);
+        createSkipButton();
         options.forEach(option => {
             const button = createButton(option);
             englishWordsDiv.appendChild(button);
