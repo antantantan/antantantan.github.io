@@ -59,6 +59,7 @@
       button.textContent = "Skip";
       button.addEventListener('click', () => {
         button.className = 'incorrect';
+        correctButton.className = 'correct';
         updateWords();
       });
       return button;
