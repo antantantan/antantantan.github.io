@@ -133,9 +133,15 @@
         shuffleArray(options);
         const skipButton = createSkipButton();
         englishWordsDiv.appendChild(skipButton);
-        options.forEach(option => {
-            const button = createButton(option);
-            englishWordsDiv.appendChild(button);
+        const chooseButton = document.createElement('button');
+        chooseButton.textContent = '???';
+        englishWordsDiv.appendChild(chooseButton);
+        chooseButton.addEventListener('click', () => {
+          chooseButton.remove();
+          options.forEach(option => {
+              const button = createButton(option);
+              englishWordsDiv.appendChild(button);
+          });
         });
     }
 
