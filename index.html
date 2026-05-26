@@ -24,6 +24,10 @@
       margin: 20px;
       font-size: xxx-large;
     }
+    .language {
+      margin-left: 10px;
+      font-size: x-large;
+    }
     button {
       margin: 8px;
       font-size: xxx-large;
@@ -46,7 +50,7 @@
     let options = [];
     let correctButton;
     let chooseButton;
-    let englishWordsDiv;
+    let toWordDiv;
     let skipped = 0;
     let wrong = 0;
     let fromWords;
@@ -81,7 +85,7 @@
           chooseButton = undefined;
           options.forEach(option => {
               const button = createButton(option);
-              englishWordsDiv.appendChild(button);
+              toWordDiv.appendChild(button);
           });
         }
         button.className = 'incorrect';
@@ -124,11 +128,11 @@
         accuracySpan.innerText = (total == 0 ? 0 : Math.round(100 * correct / total)) + '%';
         index = Math.floor(Math.random() * fromWords.length);
         const questionDiv = document.createElement('div');
-        const germanWordDiv = document.createElement('div');
-        englishWordsDiv = document.createElement('div');
+        const fromWordDiv = document.createElement('div');
+        toWordDiv = document.createElement('div');
         wordsDiv.insertBefore(questionDiv, wordsDiv.firstChild);
-        questionDiv.append(germanWordDiv);
-        questionDiv.append(englishWordsDiv);
+        questionDiv.append(fromWordDiv);
+        questionDiv.append(toWordDiv);
         questionDiv.className = 'question';
         const word = fromWords[index];
         const wordLink = document.createElement('a');
@@ -136,8 +140,12 @@
         wordLink.target = '_blank';
         wordLink.rel = 'noopener noreferrer';
         wordLink.innerText = word;
-        germanWordDiv.append(wordLink);
-        englishWordsDiv.innerHTML = '';
+        fromWordDiv.append(wordLink);
+        const language = document.createElement('span');
+        language.className = "language";
+        language.innerText = german ? "(de)" : "(en)";
+        fromWordDiv.append(language);
+        toWordDiv.innerHTML = '';
         options = [];
         options.push(index);
         for (let i = 0; i < 9; i++) {
@@ -149,16 +157,16 @@
         }
         shuffleArray(options);
         const skipButton = createSkipButton();
-        englishWordsDiv.appendChild(skipButton);
+        toWordDiv.appendChild(skipButton);
         chooseButton = document.createElement('button');
         chooseButton.textContent = 'Answer';
-        englishWordsDiv.appendChild(chooseButton);
+        toWordDiv.appendChild(chooseButton);
         chooseButton.addEventListener('click', () => {
           chooseButton.remove();
           chooseButton = undefined;
           options.forEach(option => {
               const button = createButton(option);
-              englishWordsDiv.appendChild(button);
+              toWordDiv.appendChild(button);
           });
         });
     }
