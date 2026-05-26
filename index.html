@@ -43,6 +43,8 @@
     let index = 0;
     let options = [];
     let correctButton;
+    let chooseButton;
+    let englishWordsDiv;
     let skipped = 0;
     let wrong = 0;
 
@@ -70,6 +72,14 @@
       button.className = 'skip';
       button.addEventListener('click', () => {
         skipped++;
+        if (chooseButton) {
+          chooseButton.remove();
+          chooseButton = undefined;
+          options.forEach(option => {
+              const button = createButton(option);
+              englishWordsDiv.appendChild(button);
+          });
+        }
         button.className = 'incorrect';
         correctButton.className = 'correct';
         updateWords();
@@ -108,7 +118,7 @@
         index = Math.floor(Math.random() * germanWords.length);
         const questionDiv = document.createElement('div');
         const germanWordDiv = document.createElement('div');
-        const englishWordsDiv = document.createElement('div');
+        englishWordsDiv = document.createElement('div');
         wordsDiv.insertBefore(questionDiv, wordsDiv.firstChild);
         questionDiv.append(germanWordDiv);
         questionDiv.append(englishWordsDiv);
@@ -133,11 +143,12 @@
         shuffleArray(options);
         const skipButton = createSkipButton();
         englishWordsDiv.appendChild(skipButton);
-        const chooseButton = document.createElement('button');
+        chooseButton = document.createElement('button');
         chooseButton.textContent = '???';
         englishWordsDiv.appendChild(chooseButton);
         chooseButton.addEventListener('click', () => {
           chooseButton.remove();
+          chooseButton = undefined;
           options.forEach(option => {
               const button = createButton(option);
               englishWordsDiv.appendChild(button);
