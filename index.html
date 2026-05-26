@@ -37,7 +37,8 @@
 <body>
   <div class='main'>
     <h1>German Word Quiz</h1>
-    <div>Remaining: <span id='remaining'></span> Correct: <span id='correct'></span> Skipped: <span id='skipped'></span> Wrong: <span id='wrong'></span> Accuracy: <span id='accuracy'></span></div>
+    <div>DE: Remaining: <span id='de-remaining'></span> Correct: <span id='de-correct'></span> Skipped: <span id='de-skipped'></span> Wrong: <span id='de-wrong'></span> Accuracy: <span id='de-accuracy'></span></div>
+    <div>EN: Remaining: <span id='en-remaining'></span> Correct: <span id='en-correct'></span> Skipped: <span id='en-skipped'></span> Wrong: <span id='en-wrong'></span> Accuracy: <span id='en-accuracy'></span></div>
     <div id='words'></div>
   </div>
   <script>
@@ -46,22 +47,30 @@
     const germanWords2 = [...germanWords1];
     const englishWords2 = [...englishWords1];
 
+    let german;
     let index = 0;
     let options = [];
     let correctButton;
     let chooseButton;
     let toWordDiv;
-    let skipped = 0;
-    let wrong = 0;
+    let deSkipped = 0;
+    let enSkipped = 0;
+    let deWrong = 0;
+    let enWrong = 0;
     let fromWords;
     let toWords;
 
     const wordsDiv = document.getElementById('words');
-    const remainingSpan = document.getElementById('remaining');
-    const correctSpan = document.getElementById('correct');
-    const skippedSpan = document.getElementById('skipped');
-    const wrongSpan = document.getElementById('wrong');
-    const accuracySpan = document.getElementById('accuracy');
+    const deRemainingSpan = document.getElementById('de-remaining');
+    const deCorrectSpan = document.getElementById('de-correct');
+    const deSkippedSpan = document.getElementById('de-skipped');
+    const deWrongSpan = document.getElementById('de-wrong');
+    const deAccuracySpan = document.getElementById('de-accuracy');
+    const enRemainingSpan = document.getElementById('en-remaining');
+    const enCorrectSpan = document.getElementById('en-correct');
+    const enSkippedSpan = document.getElementById('en-skipped');
+    const enWrongSpan = document.getElementById('en-wrong');
+    const enAccuracySpan = document.getElementById('en-accuracy');
 
     function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
@@ -79,7 +88,11 @@
       button.textContent = 'Skip';
       button.className = 'skip';
       button.addEventListener('click', () => {
-        skipped++;
+        if (german) {
+          deSkipped++;
+        } else {
+          enSkipped++;
+        }
         if (chooseButton) {
           chooseButton.remove();
           chooseButton = undefined;
@@ -108,7 +121,11 @@
           fromWords.splice(index, 1);
           toWords.splice(index, 1);
         } else {
-          wrong++;
+          if (german) {
+            deWrong++;
+          } else {
+            enWrong++;
+          }
         }
         updateWords();
       });
@@ -116,16 +133,23 @@
     }
 
     function updateWords() {
-        const german = Math.random() < 0.5;
+        german = Math.random() < 0.5;
         fromWords = german ? germanWords1 : englishWords1;
         toWords = german ? englishWords2 : germanWords2;
-        const correct = 2000 - germanWords1.length - germanWords2.length;
-        const total = correct + skipped + wrong;
-        remainingSpan.innerText = germanWords1.length + germanWords2.length;
-        correctSpan.innerText = correct;
-        skippedSpan.innerText = skipped;
-        wrongSpan.innerText = wrong;
-        accuracySpan.innerText = (total == 0 ? 0 : Math.round(100 * correct / total)) + '%';
+        const deCorrect = 1000 - germanWords1.length;
+        const enCorrect = 1000 - englishWords1.length;
+        const deTotal = deCorrect + deSkipped + deWrong;
+        const enTotal = enCorrect + enSkipped + enWrong;
+        deRemainingSpan.innerText = germanWords1.length;
+        enRemainingSpan.innerText = germanWords2.length;
+        deCorrectSpan.innerText = deCorrect;
+        enCorrectSpan.innerText = enCorrect;
+        deSkippedSpan.innerText = deSkipped;
+        enSkippedSpan.innerText = enSkipped;
+        deWrongSpan.innerText = deWrong;
+        enWrongSpan.innerText = enWrong;
+        deAccuracySpan.innerText = (deTotal == 0 ? 0 : Math.round(100 * deCorrect / deTotal)) + '%';
+        enAccuracySpan.innerText = (enTotal == 0 ? 0 : Math.round(100 * enCorrect / enTotal)) + '%';
         index = Math.floor(Math.random() * fromWords.length);
         const questionDiv = document.createElement('div');
         const fromWordDiv = document.createElement('div');
