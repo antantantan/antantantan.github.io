@@ -170,7 +170,8 @@
         questionDiv.className = 'question';
         const word = fromWords[index];
         const wordLink = document.createElement('a');
-        wordLink.href = 'https://translate.google.com/?sl=de&tl=en&text=' + word + '&op=translate';
+        const sltl = german ? 'sl=de&tl=en' : 'sl=en&tl=de';
+        wordLink.href = 'https://translate.google.com/?' + sltl + '&text=' + word + '&op=translate';
         wordLink.target = '_blank';
         wordLink.rel = 'noopener noreferrer';
         wordLink.innerText = word;
