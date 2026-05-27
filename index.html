@@ -13,6 +13,9 @@
     }
     .stats {
       font-size: xx-large;
+      span:not(:last-child) {
+        margin-right: 20px;
+      }
     }
     .skip {
       background-color: lightblue;
@@ -43,7 +46,7 @@
     <h1>German Word Quiz</h1>
     <div>DE➡️EN: Remaining: <span id='de-remaining'></span></div>
     <div class="stats">Correct: <span id='de-correct'></span> Skipped: <span id='de-skipped'></span> Wrong: <span id='de-wrong'></span> Accuracy: <span id='de-accuracy'></span></div>
-    <div style="margin: 10px;"></div>
+    <div style="margin: 20px;"></div>
     <div>EN➡️DE: Remaining: <span id='en-remaining'></span></div>
     <div class="stats">Correct: <span id='en-correct'></span> Skipped: <span id='en-skipped'></span> Wrong: <span id='en-wrong'></span> Accuracy: <span id='en-accuracy'></span></div>
     <div id='words'></div>
